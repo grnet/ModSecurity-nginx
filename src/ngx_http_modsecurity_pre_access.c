@@ -48,16 +48,9 @@ ngx_http_modsecurity_pre_access_handler(ngx_http_request_t *r)
 #if 1
     ngx_pool_t                   *old_pool;
     ngx_http_modsecurity_ctx_t   *ctx;
-    ngx_http_modsecurity_conf_t  *mcf;
 
     dd("catching a new _preaccess_ phase handler");
 
-    mcf = ngx_http_get_module_loc_conf(r, ngx_http_modsecurity_module);
-    if (mcf == NULL || mcf->enable != 1)
-    {
-        dd("ModSecurity not enabled... returning");
-        return NGX_DECLINED;
-    }
     /*
      * FIXME:
      * In order to perform some tests, let's accept everything.
@@ -76,8 +69,8 @@ ngx_http_modsecurity_pre_access_handler(ngx_http_request_t *r)
 
     if (ctx == NULL)
     {
-        dd("ctx is null; Nothing we can do, returning an error.");
-        return NGX_HTTP_INTERNAL_SERVER_ERROR;
+        dd("ModSecurity not enabled or an error occured");
+        return NGX_DECLINED;
     }
 
     if (ctx->request_body_processed) {

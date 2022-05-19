@@ -55,6 +55,7 @@ ngx_http_modsecurity_body_filter(ngx_http_request_t *r, ngx_chain_t *in)
     dd("body filter, recovering ctx: %p", ctx);
 
     if (ctx == NULL) {
+        dd("ModSecurity not enabled or an error occured");
         return ngx_http_next_body_filter(r, in);
     }
 

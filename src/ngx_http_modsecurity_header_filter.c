@@ -428,7 +428,7 @@ ngx_http_modsecurity_header_filter(ngx_http_request_t *r)
 
     if (ctx == NULL)
     {
-        dd("something really bad happened or ModSecurity is disabled. going to the next filter.");
+        dd("ModSecurity not enabled or an error occured");
         return ngx_http_next_header_filter(r);
     }
 
